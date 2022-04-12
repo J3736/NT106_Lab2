@@ -23,7 +23,11 @@ namespace Lab2
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.ShowDialog();
-            
+
+            // Show messagebox
+            string msg = "Các kí tự  thêm vào Text Box sẽ được viết hoá khi ghi vào file.";
+            MessageBox.Show(msg);
+
             // Ghi xuong file
             StreamWriter sw = new StreamWriter(sfd.FileName);
             content = rtbMessage.Text;

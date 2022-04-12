@@ -61,5 +61,14 @@ namespace Lab2
             else
                 frm.Show();
         }
+
+        private void btn3_Click(object sender, EventArgs e)
+        {
+            frmB3 frm = new frmB3();
+            if (Application.OpenForms.OfType<frmB3>().Any())
+                MessageBox.Show("Form is opened.");
+            else
+                frm.Show();
+        }
     }
 }
