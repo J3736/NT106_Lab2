@@ -70,5 +70,14 @@ namespace Lab2
             else
                 frm.Show();
         }
+
+        private void btn5_Click(object sender, EventArgs e)
+        {
+            Bai5 frm = new Bai5();
+            if (Application.OpenForms.OfType<Bai5>().Any())
+                MessageBox.Show("Form is opened.");
+            else
+                frm.Show();
+        }
     }
 }
