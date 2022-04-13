@@ -45,6 +45,8 @@ namespace Lab2
                 StringSplitOptions.RemoveEmptyEntries) ;
             int wordCount = source.Count();
             tbSoTu.Text = wordCount.ToString();
+
+            str.Close();
         }
 
         private void frmB2_Load(object sender, EventArgs e)

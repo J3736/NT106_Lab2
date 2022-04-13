@@ -71,7 +71,7 @@ namespace Lab2
         private void btnOutput_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Xuất kết quả ra file OutputB3.txt", "Output");
-            string path = AppDomain.CurrentDomain.BaseDirectory + @"\OutputB3.txt";
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"\OutputB3.t";
 
             if (!File.Exists(path))
             {

@@ -47,6 +47,7 @@
             // 
             this.rtbFile.Location = new System.Drawing.Point(12, 95);
             this.rtbFile.Name = "rtbFile";
+            this.rtbFile.ReadOnly = true;
             this.rtbFile.Size = new System.Drawing.Size(687, 519);
             this.rtbFile.TabIndex = 1;
             this.rtbFile.Text = "";

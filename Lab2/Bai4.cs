@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Globalization;
 
 namespace Lab2
 {
@@ -16,58 +18,98 @@ namespace Lab2
         {
             InitializeComponent();
         }
-
-        private void Bai4_Load(object sender, EventArgs e)
+        OpenFileDialog ofd = new OpenFileDialog();
+        private void button1_Click(object sender, EventArgs e)
         {
 
-        }
+            ofd.ShowDialog();
+            int count = 1;
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+            // Đọc file
+            StreamReader str = new StreamReader(ofd.FileName);
 
-        }
-        List <SinhVien> dssv = new List<SinhVien> ();
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            SinhVien sv = new SinhVien ();
-            sv.MSSV = int.Parse(tbMSSV.Text);
-            sv.Name = tbName.Text;
-            sv.PhoneNumber = tbPhone.Text;
-            sv.Diem1 = float.Parse(tbP1.Text);
-            sv.Diem2 = float.Parse(tbP2.Text);
-            dssv.Add (sv);
-            ShowDSSV();
-        }
-
-        private void ShowDSSV()
-        {
-            lstbSV.Items.Clear();
-            foreach (SinhVien sv in dssv)
+            while (!str.EndOfStream)
             {
-                lstbSV.Items.Add(sv);
+                try
+                {
+                    rtbHocVien.Text += count.ToString() + ": ";
+                    string mssv = str.ReadLine();
+                    rtbHocVien.Text += mssv + "  ";
+                    string name = str.ReadLine();
+                    rtbHocVien.Text += name + "  ";
+                    string n_phone = str.ReadLine();
+                    rtbHocVien.Text += n_phone + "\n";
+
+                    float score_math = float.Parse(str.ReadLine());
+                    rtbHocVien.Text += "Điểm toán: \t" + score_math.ToString() + "\n";
+
+                    float score_literature = float.Parse(str.ReadLine());
+                    rtbHocVien.Text += "Điểm văn: \t" + score_literature.ToString() + "\n";
+
+                    float score_average = (score_math + score_literature) / 2;
+                    rtbHocVien.Text += "Điểm trung bình: \t" + score_literature.ToString() + "\n\n";
+
+                    // Hàng trống.
+                    str.ReadLine();
+                    count++;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("File input không đúng định dạng.", "Lỗi.", MessageBoxButtons.OK);
+                }
             }
+            str.Close();
         }
 
-        private void rtbSV_TextChanged(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Xuất file và điểm trung bình vào OutputB4.txt", "XUẤT FILE");
 
-        }
+            // Path output
+            string path = AppDomain.CurrentDomain.BaseDirectory + "OutputB4.txt";
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            string path = Application.StartupPath + "\\Bai4.txt";
-            bool check = SaveFileB4.Save(dssv, path);
-            if (check)
+            // Ghi file
+            StreamWriter stw = new StreamWriter(path);
+            StreamReader str = new StreamReader(ofd.FileName);
+            if (!File.Exists(path))
+                File.CreateText(path);
+            else
             {
-                MessageBox.Show("Save Successful!");
-            }
-        }
+                while (!str.EndOfStream)
+                {
+                    try
+                    {
+                        string mssv = str.ReadLine();
+                        stw.WriteLine(mssv);
 
-        private void btnRead_Click(object sender, EventArgs e)
-        {
-            string path = Application.StartupPath + "\\Bai4.txt";
-            dssv = SaveFileB4.Read(path);
-            ShowDSSV ();
+                        string name = str.ReadLine();
+                        stw.WriteLine(name);
+
+                        string n_phone = str.ReadLine();
+                        stw.WriteLine(n_phone);
+
+                        float score_math = float.Parse(str.ReadLine());
+                        stw.WriteLine(score_math.ToString());
+
+                        float score_literature = float.Parse(str.ReadLine());
+                        stw.WriteLine(score_literature.ToString());
+
+                        float score_average = (score_math + score_literature) / 2;
+                        stw.WriteLine(score_average.ToString());
+
+                        // Hàng trống.
+                        stw.WriteLine("\n");
+                        str.ReadLine();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("File input không đúng định dạng.", "Lỗi.", MessageBoxButtons.OK);
+                    }
+
+                }
+            }
+            stw.Close();
+            str.Close();
         }
     }
 }
